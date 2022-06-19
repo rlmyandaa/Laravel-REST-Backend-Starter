@@ -6,11 +6,17 @@ use App\Models\Orm;
 use Illuminate\Http\Request;
 use Orion\Concerns\DisableAuthorization;
 use Orion\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrmController extends Controller
 {
     protected $model = Orm::class;
-    use DisableAuthorization;
+
+    public function resolveUser()
+    {
+        return Auth::guard('sanctum')->user();
+    }
+
     public function sortableBy(): array
     {
         return ['name', 'company', 'phone', 'address'];
